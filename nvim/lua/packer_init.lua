@@ -78,8 +78,14 @@ return packer.startup{
     use { 'rose-pine/neovim', as = 'rose-pine' }
 
     -- LSP
-    use 'neovim/nvim-lspconfig'
-
+    use ({
+			'neovim/nvim-lspconfig',
+			requires = {
+ 				-- lspconfig extensions
+				{ "williamboman/mason.nvim" },
+ 				{ "williamboman/mason-lspconfig.nvim" },
+			},
+		})
     -- Autocomplete
     use {
       'hrsh7th/nvim-cmp',

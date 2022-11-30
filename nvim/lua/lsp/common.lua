@@ -1,31 +1,24 @@
 -----------------------------------------------------------
--- Neovim LSP configuration file
+-- Neovim LSP common configuration file
 -----------------------------------------------------------
-
--- Plugin: nvim-lspconfig
--- url: https://github.com/neovim/nvim-lspconfig
+local M = {}
 
 -- For configuration see the Wiki: https://github.com/neovim/nvim-lspconfig/wiki
 -- Autocompletion settings of "nvim-cmp" are defined in plugins/nvim-cmp.lua
 
-local lsp_status_ok, lspconfig = pcall(require, 'lspconfig')
-if not lsp_status_ok then
-  return
-end
-
 local cmp_status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not cmp_status_ok then
-  return
+  return nil
 end
 
 -- Add additional capabilities supported by nvim-cmp
 -- See: https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+M.common_on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   --vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -65,74 +58,56 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+	vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+	vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+
+	-- Diagnostic settings:
+	-- see: `:help vim.diagnostic.config`
+	-- Customizing how diagnostics are displayed
+	vim.diagnostic.config({
+		virtual_text = true,
+		-- TODO
+		-- signs =
+		-- underline =
+		-- severity_sort
+		update_in_insert = true,
+		-- TODO
+		float = {
+			focusable = false,
+			style = "minimal",
+			border = "rounded",
+			source = "always",
+			header = "",
+			prefix = "",
+		},
+	})
+	--vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, lvim.lsp.float)
+	--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, lvim.lsp.float)
+
+	-- Show line diagnostics automatically in hover window
+	vim.cmd([[
+	autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })
+	]])
+
+	-- Mappings.
+	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+	local opts = { noremap=true, silent=true }
+	vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+	vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+
 end
-
--- Diagnostic settings:
--- see: `:help vim.diagnostic.config`
--- Customizing how diagnostics are displayed
-vim.diagnostic.config({
-  update_in_insert = true,
-  float = {
-    focusable = false,
-    style = "minimal",
-    border = "rounded",
-    source = "always",
-    header = "",
-    prefix = "",
-	},
-})
-
--- Show line diagnostics automatically in hover window
-vim.cmd([[
-  autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })
-]])
-
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
---[[
-Language servers setup:
-
-For language servers list see:
-https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-
-Language server installed:
-
-Bash          -> bashls
-Python        -> pyright
-C-C++         -> clangd
-HTML/CSS/JSON -> vscode-html-languageserver
-JavaScript/TypeScript -> tsserver
---]]
 
 -- Define `root_dir` when needed
 -- See: https://github.com/neovim/nvim-lspconfig/issues/320
 -- This is a workaround, maybe not work with some servers.
-local root_dir = function()
+M.root_dir = function()
   return vim.fn.getcwd()
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches.
--- Add your language server below:
-local servers = { 'bashls', 'pyright', 'clangd', 'html', 'cssls', 'tsserver' }
+M.flags = {
+	debounce_text_changes = 150,
+}
 
--- Call setup
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    root_dir = root_dir,
-    capabilities = capabilities,
-    flags = {
-      -- default in neovim 0.7+
-      debounce_text_changes = 150,
-    }
-  }
-end
+return M
