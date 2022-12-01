@@ -44,85 +44,87 @@ end
 return packer.startup{
   function(use)
     -- Add you plugins here:
-    use 'wbthomason/packer.nvim' -- packer can manage itself
+    use { "wbthomason/packer.nvim" } -- packer can manage itself
 
     -- File explorer
-    use 'kyazdani42/nvim-tree.lua'
+    use {
+			"nvim-tree/nvim-tree.lua",
+			config = function() require("plugins.nvim-tree") end
+		}
 
     -- Indent line
-    use 'lukas-reineke/indent-blankline.nvim'
+    use {
+			"lukas-reineke/indent-blankline.nvim",
+			config = function() require('plugins/indent-blankline') end
+		}
 
     -- Autopair
     use {
-      'windwp/nvim-autopairs',
-      config = function()
-        require('nvim-autopairs').setup{}
-      end
+      "windwp/nvim-autopairs",
+      config = function() require('nvim-autopairs').setup{} end
     }
 
     -- Icons
-    use 'kyazdani42/nvim-web-devicons'
-
-    -- Tag viewer
-    use 'preservim/tagbar'
+    use { "kyazdani42/nvim-web-devicons" }
 
     -- Treesitter interface
     use {
-      'nvim-treesitter/nvim-treesitter',
-      run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+      "nvim-treesitter/nvim-treesitter",
+      run = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
+			config = function() require("plugins/nvim-treesitter") end,
     }
 
     -- Color schemes
-    use 'navarasu/onedark.nvim'
-    use 'tanvirtin/monokai.nvim'
-    use { 'rose-pine/neovim', as = 'rose-pine' }
+    use { "navarasu/onedark.nvim" }
+    use { "tanvirtin/monokai.nvim" }
+    use { "rose-pine/neovim", as = "rose-pine" }
 
     -- LSP
-    use ({
-			'neovim/nvim-lspconfig',
+    use {
+			"neovim/nvim-lspconfig",
 			requires = {
  				-- lspconfig extensions
 				{ "williamboman/mason.nvim" },
  				{ "williamboman/mason-lspconfig.nvim" },
 			},
-		})
+		}
     -- Autocomplete
     use {
-      'hrsh7th/nvim-cmp',
+      "hrsh7th/nvim-cmp",
       requires = {
-        'L3MON4D3/LuaSnip',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-buffer',
-        'saadparwaiz1/cmp_luasnip',
+        "L3MON4D3/LuaSnip",
+        "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-path",
+        "hrsh7th/cmp-buffer",
+        "saadparwaiz1/cmp_luasnip",
       },
+			config = function() require("plugins/nvim-cmp") end
     }
 
     -- Statusline
     use {
-      'feline-nvim/feline.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons' },
+      "feline-nvim/feline.nvim",
+      requires = { "kyazdani42/nvim-web-devicons" },
     }
 
     -- git labels
     use {
-      'lewis6991/gitsigns.nvim',
-      requires = { 'nvim-lua/plenary.nvim' },
-      config = function()
-        require('gitsigns').setup{}
-      end
+      "lewis6991/gitsigns.nvim",
+      requires = { "nvim-lua/plenary.nvim" },
+      config = function() require("gitsigns").setup{} end
     }
 
     -- Dashboard (start screen)
     use {
-      'goolord/alpha-nvim',
-      requires = { 'kyazdani42/nvim-web-devicons' },
+      "goolord/alpha-nvim",
+      requires = { "kyazdani42/nvim-web-devicons" },
+			config = function() require("plugins/alpha-nvim") end
     }
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
-      require('packer').sync()
+      require("packer").sync()
     end
 
   end,
@@ -130,8 +132,8 @@ return packer.startup{
   config = {
     snapshots = "v1",
     snapshot_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "snapshots"),
-    compile_path = require("packer.util").join_paths(vim.fn.stdpath('config'), 'plugin', 'packer_compiled.lua'),
-    max_jobs = max_jobs,
+    compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
+    max_jobs = 16,
     luarocks = {
       python_cmd = "python3",
     },
