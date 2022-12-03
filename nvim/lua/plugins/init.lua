@@ -5,32 +5,31 @@
 -- Plugin manager: packer.nvim
 -- url: https://github.com/wbthomason/packer.nvim
 
--- For information about installed plugins see the README:
--- neovim-lua/README.md
--- https://github.com/brainfucksec/neovim-lua#readme
-
-
 -- Automatically install packer
-local fn = vim.fn
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({
-    'git',
-    'clone',
-    '--depth',
-    '1',
-    'https://github.com/wbthomason/packer.nvim',
-    install_path
-  })
-  vim.o.runtimepath = vim.fn.stdpath('data') .. '/site/pack/*/start/*,' .. vim.o.runtimepath
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+		 -- https://github.com/wbthomason/packer.nvim/issues/750
+		 local data_path = fn.stdpath("data") .. "/site/pack/*/start/*"
+		 if not string.find(vim.o.runtimepath, data_path) then
+			 vim.o.runtimepath = data_path .. "," .. vim.o.runtimepath
+		 end
+		 return true
+  end
+  return false
 end
+
+local packer_bootstrap = ensure_packer()
 
 -- Autocommand that reloads neovim whenever you save the packer_init.lua file
 vim.cmd [[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost packer_init.lua source <afile> | PackerSync
+    autocmd BufWritePost init.lua source <afile> | PackerSync
+    autocmd BufWritePost init.lua source <afile> | PackerCompile
   augroup end
 ]]
 
@@ -131,7 +130,7 @@ return packer.startup{
   end,
 
   config = {
-    snapshots = "v1",
+    snapshots = "v2",
     snapshot_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "snapshots"),
     compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
     max_jobs = 16,
