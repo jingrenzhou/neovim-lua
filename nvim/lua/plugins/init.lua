@@ -40,8 +40,9 @@ if not status_ok then
 end
 
 -- Install plugins
-return packer.startup{
-  function(use)
+
+local spec = {
+	function(use)
     -- Add you plugins here:
     use { "wbthomason/packer.nvim" } -- packer can manage itself
 
@@ -129,30 +130,30 @@ return packer.startup{
 
   end,
 
-  config = {
-    snapshots = "v2",
-    snapshot_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "snapshots"),
-    compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
-    max_jobs = 16,
-    luarocks = {
-      python_cmd = "python3",
-    },
+	config = {
+		-- snapshot = "v2",
+		snapshot_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "snapshots"),
+		compile_path = require("packer.util").join_paths(vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"),
+		max_jobs = 16,
 
-    git = {
-      -- default_url_format = "https://hub.fastgit.xyz/%s",
-      -- default_url_format = "https://mirror.ghproxy.com/https://github.com/%s",
-      -- default_url_format = "https://gitcode.net/mirrors/%s",
-      -- default_url_format = "https://gitclone.com/github.com/%s",
-    },
-    -- display = {
-      -- 使用浮动窗口显示
-      --   open_fn = function()
-        --     return require("packer.util").float({ border = "single" })
-        --   end,
-        -- },
-    profile = {
-      enable = true,
-    },
-    },
+		git = {
+			-- default_url_format = "https://mirror.ghproxy.com/https://github.com/%s",
+			-- default_url_format = "https://gitcode.net/mirrors/%s",
+			-- default_url_format = "https://gitclone.com/github.com/%s",
+		},
+		display = {
+			open_fn = function()
+				return require("packer.util").float({ border = "single" })
+			end,
+		},
+		profile = {
+			enable = true,
+		},
+		luarocks = {
+			python_cmd = "python3",
+		}
+	},
 }
+
+return packer.startup(spec)
 
