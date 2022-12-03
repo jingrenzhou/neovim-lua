@@ -7,10 +7,7 @@ Website: https://github.com/brainfucksec/neovim-lua
 --]]
 
 -- Import Lua modules
-require('core/options')
-require('core/autocmds')
-require('core/keymaps')
-require('core/colors')
-require('core/statusline')
+
+require('basic') -- options and autocmds and keymaps for basic configure
 require('plugins')
 require('lsp')
