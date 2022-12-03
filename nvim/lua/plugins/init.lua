@@ -45,8 +45,53 @@ local spec = {
 	function(use)
     -- Add you plugins here:
     use { "wbthomason/packer.nvim" } -- packer can manage itself
+		--colorschemes▏
+		-- tokyonight
+		use {
+			"folke/tokyonight.nvim",
+			config = function() require("plugins/colorscheme/tokyonight") end
+		}
 
-    -- File explorer
+		--OceanicNext
+		--use({ "mhartington/oceanic-next", event = "VimEnter" })
+		--gruvbox
+		--use({
+		--"ellisonleao/gruvbox.nvim",
+		-- requires = { "rktjmp/lush.nvim" },
+		--})
+
+		--zephyr
+		--use("glepnir/zephyr-nvim")
+
+		--nord
+		--use("shaunsingh/nord.nvim")
+
+		--onedark
+		--use("ful1e5/onedark.nvim")
+
+		--nightfox
+		--use("EdenEast/nightfox.nvim")
+		--use { "navarasu/onedark.nvim" }
+		--use { "tanvirtin/monokai.nvim" }
+		--use { "rose-pine/neovim", as = "rose-pine" }
+
+    -- Statusline
+
+		--- lualine
+		use {
+			"nvim-lualine/lualine.nvim",
+      requires = { "kyazdani42/nvim-web-devicons" },
+			config = function() require("plugins/statusline/lualine") end,
+		}
+
+		--- feline
+		-- use {
+		--   "feline-nvim/feline.nvim",
+		--   requires = { "kyazdani42/nvim-web-devicons" },
+		--   config = function() require("plugins/statusline/feline") end
+		-- }
+
+		--File explorer
     use {
 			"nvim-tree/nvim-tree.lua",
 			config = function() require("plugins.nvim-tree") end
@@ -64,9 +109,6 @@ local spec = {
       config = function() require('nvim-autopairs').setup{} end
     }
 
-    -- Icons
-    use { "kyazdani42/nvim-web-devicons" }
-
     -- Treesitter interface
     use {
       "nvim-treesitter/nvim-treesitter",
@@ -74,10 +116,6 @@ local spec = {
 			config = function() require("plugins/nvim-treesitter") end,
     }
 
-    -- Color schemes
-    use { "navarasu/onedark.nvim" }
-    use { "tanvirtin/monokai.nvim" }
-    use { "rose-pine/neovim", as = "rose-pine" }
 
     -- LSP
     use {
@@ -101,12 +139,6 @@ local spec = {
 			config = function() require("plugins/nvim-cmp") end
     }
 
-    -- Statusline
-    use {
-      "feline-nvim/feline.nvim",
-      requires = { "kyazdani42/nvim-web-devicons" },
-      config = function() require("plugins/statusline/feline") end
-    }
 
     -- git labels
     use {
