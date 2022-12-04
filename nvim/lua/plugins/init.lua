@@ -91,6 +91,15 @@ local spec = {
 		--   config = function() require("plugins/statusline/feline") end
 		-- }
 
+		-- Bufferline
+		use {
+			"akinsho/bufferline.nvim",
+      requires = { "kyazdani42/nvim-web-devicons" },
+			config = function() require("plugins/bufferline") end,
+			event = "BufWinEnter",
+
+		}
+
 		--File explorer
     use {
 			"nvim-tree/nvim-tree.lua",
