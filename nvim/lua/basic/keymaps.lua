@@ -38,10 +38,10 @@ map('n', '<C-l>', '<C-w>l')
 map('n', '<leader>r', ':so %<CR>')
 
 -- Fast saving with <leader> and s
-map('n', '<leader>s', ':w<CR>')
+-- map('n', '<leader>s', ':w<CR>')    conflict with which-key
 
 -- Close all windows and exit from Neovim with <leader> and q
-map('n', '<leader>q', ':qa!<CR>')
+--map('n', '<leader>q', ':qa!<CR>')
 
 -----------------------------------------------------------
 -- Applications and Plugins shortcuts

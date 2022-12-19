@@ -106,6 +106,28 @@ local spec = {
 			config = function() require("plugins.nvim-tree") end
 		}
 
+		-- search tools
+		-- telescope-fzf
+		use {'nvim-telescope/telescope-fzf-native.nvim',
+		run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+		}
+
+		-- telescope
+		use {
+			"nvim-telescope/telescope.nvim",
+			-- branch = "0.1.x",
+			-- tag = '0.1.0'
+			requires = {
+				-- telescope extensions
+			--	{ "nvim-lua/plenary.nvim" },
+			--	{ "LinArcX/telescope-env.nvim" },
+				{ "nvim-telescope/telescope-fzf-native.nvim" },
+			  { "gbrlsnchs/telescope-lsp-handlers.nvim" },
+			--	{ "nvim-telescope/telescope-ui-select.nvim" },
+			},
+			config = function() require("plugins.telescope") end
+		}
+
     -- Indent line
     use {
 			"lukas-reineke/indent-blankline.nvim",
@@ -162,6 +184,12 @@ local spec = {
       requires = { "kyazdani42/nvim-web-devicons" },
 			config = function() require("plugins/alpha-nvim") end
     }
+
+		-- keymap manager
+		use {
+			"folke/which-key.nvim",
+			--config = function()	require("plugins.which-key") end
+		}
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

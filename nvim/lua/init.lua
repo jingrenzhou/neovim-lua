@@ -11,3 +11,4 @@ Website: https://github.com/brainfucksec/neovim-lua
 require('basic') -- options and autocmds and keymaps for basic configure
 require('plugins')
 require('lsp')
+require("plugins.which-key")
