@@ -61,3 +61,4 @@ end
  which_key.setup(config)
 
  require("plugins.which-key.telescope")
+ require("plugins.which-key.nvim-tree")

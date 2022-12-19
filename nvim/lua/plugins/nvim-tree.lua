@@ -169,10 +169,6 @@ config.view.mappings.list = {
 
 nvim_tree.setup(config)
 
-local opts = { noremap = true, silent = true }
-
-vim.api.nvim_set_keymap("n", "tf", "<cmd>NvimTreeToggle<CR>", opts)
-
 --[[
 vim.api.nvim_create_autocmd("BufEnter", {
   nested = true,
