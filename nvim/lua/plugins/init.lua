@@ -165,9 +165,11 @@ local spec = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-buffer",
+				"hrsh7th/cmp-cmdline",
+				"hrsh7th/cmp-vsnip",
         "saadparwaiz1/cmp_luasnip",
       },
-			config = function() require("plugins/nvim-cmp") end
+			config = function() require("plugins.nvim-cmp") end
     }
 
 
@@ -175,7 +177,7 @@ local spec = {
     use {
       "lewis6991/gitsigns.nvim",
       requires = { "nvim-lua/plenary.nvim" },
-      config = function() require("gitsigns").setup{} end
+      config = function() require("plugins.gitsigns") end
     }
 
     -- Dashboard (start screen)

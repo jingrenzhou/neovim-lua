@@ -62,3 +62,4 @@ end
 
  require("plugins.which-key.telescope")
  require("plugins.which-key.nvim-tree")
+ require("plugins.which-key.gitsigns")
