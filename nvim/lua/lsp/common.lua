@@ -11,6 +11,8 @@ if not cmp_status_ok then
   return nil
 end
 
+local icons = require("utils.icons")
+
 -- Add additional capabilities supported by nvim-cmp
 -- See: https://github.com/neovim/nvim-lspconfig/wiki/Autocompletion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -45,31 +47,27 @@ M.common_on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-	vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-	vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+	vim.keymap.set('n', '<leader>lh', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', '<leader>ln', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>lc', vim.lsp.buf.code_action, bufopts)
+	vim.keymap.set('n', '<leader>lf', function() vim.lsp.buf.format { async = true } end, bufopts)
 
 	-- Diagnostic settings:
 	-- see: `:help vim.diagnostic.config`
 	-- Customizing how diagnostics are displayed
 	vim.diagnostic.config({
+		signs = {
+			active = true,
+			values = {
+				{ name = "DiagnosticSignError", text = icons.diagnostics.Error },
+				{ name = "DiagnosticSignWarn", text = icons.diagnostics.Warning },
+				{ name = "DiagnosticSignHint", text = icons.diagnostics.Hint },
+				{ name = "DiagnosticSignInfo", text = icons.diagnostics.Info },
+			},
+		},
 		virtual_text = true,
-		-- TODO
-		-- signs =
-		-- underline =
-		-- severity_sort
+		underline = true,
+		severity_sort = true,
 		update_in_insert = true,
 		-- TODO
 		float = {
@@ -85,17 +83,9 @@ M.common_on_attach = function(client, bufnr)
 	--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, lvim.lsp.float)
 
 	-- Show line diagnostics automatically in hover window
-	vim.cmd([[
-	autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })
-	]])
-
-	-- Mappings.
-	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
-	local opts = { noremap=true, silent=true }
-	vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-	vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+--	vim.cmd([[
+--	autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })
+--	]])
 
 end
 

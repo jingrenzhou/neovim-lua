@@ -26,8 +26,12 @@ local mappings = {
 	},
 	l = {
 		name = "Lsp",
-		d = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
-		w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
+		d = { "<cmd>Telescope lsp_definitions theme=get_ivy<cr>", "Lsp Definitions" },
+		D = {"<cmd>Telescope lsp_type_definitions theme=get_ivy<cr>", "Lsp Type Definitions" },
+		r = { "<cmd>Telescope lsp_references theme=get_ivy<cr>", "Lsp References" },
+		i = { "<cmd>Telescope lsp_implementations theme=get_ivy<cr>", "Lsp Implementations" },
+		g = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
+		G = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
 		s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
 		S = {
 			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
