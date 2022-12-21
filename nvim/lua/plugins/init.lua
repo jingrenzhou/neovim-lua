@@ -180,6 +180,12 @@ local spec = {
       config = function() require("plugins.gitsigns") end
     }
 
+		-- comment
+		use {
+			"numToStr/Comment.nvim",
+      config = function() require("plugins.comment") end
+		}
+
     -- Dashboard (start screen)
     use {
       "goolord/alpha-nvim",
