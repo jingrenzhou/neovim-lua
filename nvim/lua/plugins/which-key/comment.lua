@@ -30,9 +30,11 @@ local mappings = {
 }
 
 local vmappings = {
-	name = "Comment",
-	["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comment toggle linewise (visual)" },
-	b = { "<Plug>(comment_toggle_blockwise_visual)", "Comment toggle blockwise (visual)" },
+	["/"] = {
+		name = "Comment",
+		["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comment toggle linewise (visual)" },
+		b = { "<Plug>(comment_toggle_blockwise_visual)", "Comment toggle blockwise (visual)" },
+	},
 }
 
 require("which-key").register(mappings, opts)
