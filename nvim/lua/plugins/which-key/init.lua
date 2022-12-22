@@ -65,3 +65,4 @@ end
  require("plugins.which-key.gitsigns")
  require("plugins.which-key.comment")
  require("plugins.which-key.bufferline")
+ require("plugins.which-key.easymotion")

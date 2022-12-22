@@ -193,6 +193,10 @@ local spec = {
 			config = function() require("plugins/alpha-nvim") end
     }
 
+		use {
+			"easymotion/vim-easymotion",
+		}
+
 		-- keymap manager
 		use {
 			"folke/which-key.nvim",
