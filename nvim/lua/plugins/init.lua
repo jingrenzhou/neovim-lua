@@ -96,7 +96,7 @@ local spec = {
 			"akinsho/bufferline.nvim",
       requires = { "kyazdani42/nvim-web-devicons" },
 			config = function() require("plugins/bufferline") end,
-			event = "BufWinEnter",
+			-- event = "BufWinEnter",
 
 		}
 

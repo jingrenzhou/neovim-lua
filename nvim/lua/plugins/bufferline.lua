@@ -78,7 +78,6 @@ local config = {
 		-- NOTE: this will be called a lot so don't do any heavy processing here
 		custom_filter = custom_filter,
 		offsets = {
-			--[[
 			{
 				filetype = "undotree",
 				text = "Undotree",
@@ -96,7 +95,6 @@ local config = {
 				text = "Flutter Outline",
 				highlight = "PanelHeading",
 			},
-			]]
 			{
 				filetype = "NvimTree",
 				text = "Explorer",
@@ -220,15 +218,3 @@ if not status_ok then
 end
 
 bufferline.setup(config)
-
---[[
--- 左右Tab切换
-keymap("n", uBufferLine.prev, ":BufferLineCyclePrev<CR>")
-keymap("n", uBufferLine.next, ":BufferLineCycleNext<CR>")
--- "moll/vim-bbye" 关闭当前 buffer
-keymap("n", uBufferLine.close, ":Bdelete!<CR>")
--- 关闭左/右侧标签页
-keymap("n", uBufferLine.close_left, ":BufferLineCloseLeft<CR>")
-keymap("n", uBufferLine.close_right, ":BufferLineCloseRight<CR>")
-]]
-
