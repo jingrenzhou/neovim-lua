@@ -13,8 +13,8 @@ local opts = {
 }
 
 local mappings = {
-	b = {
-		name = "Bar",
+	m = {
+		name = "Misc",
 		t = { "<cmd>NvimTreeToggle<cr>", "Open/Close NvimTree" },
 	},
 }
