@@ -13,6 +13,10 @@ local opts = {
 }
 
 local mappings = {
+	b = {
+		name = "Buffers",
+		f = { "<cmd>Telescope buffers<cr>", "Find" },
+	},
 	g = {
 		name = "Git",
 		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
@@ -41,7 +45,6 @@ local mappings = {
 	},
 	s = {
 		name = "Search",
-		b = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
 		c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
 		f = { "<cmd>Telescope find_files<cr>", "Find File" },
