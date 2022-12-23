@@ -1,4 +1,7 @@
-local common = require("lsp.common-config")
+local status, common = pcall(require, "lsp.common")
+if not status then
+	return
+end
 local util = require 'lspconfig.util'
 
 local bin_name = 'pyright-langserver'
@@ -26,12 +29,12 @@ local function organize_imports()
 end
 
 local opts = {
-  capabilities = common.capabilities,
-  flags = common.flags,
-  on_attach = function(client, bufnr)
-    common.disableFormat(client)
-    common.keyAttach(bufnr)
-  end,
+	flags = common.flags,
+	on_attach = function(client, bufnr)
+		-- common.disableFormat(client)
+		common.common_on_attach(client, bufnr)
+	end,
+	capabilities = common.capabilities,
 
   default_config = {
     cmd = cmd,
@@ -62,7 +65,7 @@ https://github.com/microsoft/pyright
   },
 }
 return {
-  on_setup = function(server)
+  setup = function(server)
     server.setup(opts)
   end,
 }

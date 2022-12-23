@@ -1,4 +1,7 @@
-local common = require("lsp.common")
+local status, common = pcall(require, "lsp.common")
+if not status then
+	return
+end
 local util = require 'lspconfig.util'
 
 -- https://clangd.llvm.org/extensions.html#switch-between-sourceheader
@@ -31,35 +34,42 @@ local root_files = {
   'configure.ac', -- AutoTools
 }
 
-local default_capabilities = {
-  textDocument = {
-    completion = {
-      editsNearCursor = true,
-    },
-  },
-  offsetEncoding = { 'utf-8', 'utf-16' },
-}
+-- local default_capabilities = {
+--   textDocument = {
+--     completion = {
+--       editsNearCursor = true,
+--     },
+--   },
+--   offsetEncoding = { 'utf-8', 'utf-16' },
+-- }
 
-local opt1 = {
-  default_config = {
-    cmd = { 'clangd', '--log=verbose' },
-    filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
-    root_dir = function(fname)
-      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
-    end,
-    single_file_support = true,
-    -- capabilities = default_capabilities,
-  },
-  commands = {
-    ClangdSwitchSourceHeader = {
-      function()
-        switch_source_header(0)
-      end,
-      description = 'Switch between source/header',
-    },
-  },
-  docs = {
-    description = [[
+local opts = {
+	flags = common.flags,
+	on_attach = function(client, bufnr)
+		-- common.disableFormat(client)
+		common.common_on_attach(client, bufnr)
+	end,
+	capabilities = common.capabilities,
+	default_config = {
+		cmd = { 'clangd', '--log=verbose' },
+		filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+
+		root_dir = function(fname)
+			return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+		end,
+		single_file_support = true,
+	},
+	settings = {}, -- reserved for clang config
+	commands = {
+		ClangdSwitchSourceHeader = {
+			function()
+				switch_source_header(0)
+			end,
+			description = 'Switch between source/header',
+		},
+	},
+	docs = {
+		description = [[
 https://clangd.llvm.org/installation.html
 - **NOTE:** Clang >= 11 is recommended! See [#23](https://github.com/neovim/nvim-lsp/issues/23).
 - If `compile_commands.json` lives in a build directory, you should
@@ -87,17 +97,17 @@ https://clangd.llvm.org/installation.html
   },
 }
 
-local opts = {
-  flags = common.flags,
-	on_attach = function(client, bufnr)
-		-- common.disableFormat(client)
-		common.common_on_attach(client, bufnr)
-	end,
-  cmd = { "clangd", "--log=verbose", "--pretty",  "--background-index", "-j=2", "--query-driver=/usr/lib64/ccache/gcc"},
-  filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
-  single_file_support = true,
-  -- root_dir = common.root_dir,
-}
+-- local opts = {
+--   flags = common.flags,
+-- 	on_attach = function(client, bufnr)
+-- 		-- common.disableFormat(client)
+-- 		common.common_on_attach(client, bufnr)
+-- 	end,
+--   cmd = { "clangd", "--log=verbose", "--pretty",  "--background-index", "-j=2", "--query-driver=/usr/lib64/ccache/gcc"},
+--   filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+--   single_file_support = true,
+--   -- root_dir = common.root_dir,
+-- }
 
 return {
   setup = function(server)

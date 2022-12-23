@@ -8,7 +8,7 @@ local M = {}
 
 local cmp_status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not cmp_status_ok then
-  return nil
+  return M
 end
 
 local icons = require("utils.icons")

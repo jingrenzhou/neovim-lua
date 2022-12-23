@@ -1,12 +1,15 @@
 local util = require 'lspconfig.util'
-local common = require("lsp.common-config")
-
+local status, common = pcall(require, "lsp.common")
+if not status then
+	return
+end
 local opts = {
-  flags = common.flags,
-  on_attach = function(client, bufnr)
-    -- common.disableFormat(client)
-  common.keyAttach(bufnr)
-  end,
+ 	flags = common.flags,
+	on_attach = function(client, bufnr)
+		-- common.disableFormat(client)
+		common.common_on_attach(client, bufnr)
+	end,
+	capabilities = common.capabilities,
   default_config = {
     cmd = { 'golangci-lint-langserver' },
     filetypes = { 'go', 'gomod' },
@@ -41,7 +44,6 @@ go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
 
 return {
   setup = function(server)
-    -- _G.log(opts)
     server.setup(opts)
   end
 

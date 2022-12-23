@@ -1,13 +1,17 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/lua/lspconfig/server_configurations/gopls.lua
 local util = require 'lspconfig.util'
-local common = require("lsp.common-config")
+local status, common = pcall(require, "lsp.common")
+if not status then
+	return
+end
 
 local opts = {
-  flags = common.flags,
-  on_attach = function(client, bufnr)
-    -- common.disableFormat(client)
-  common.keyAttach(bufnr)
-  end,
+	flags = common.flags,
+	on_attach = function(client, bufnr)
+		-- common.disableFormat(client)
+		common.common_on_attach(client, bufnr)
+	end,
+	capabilities = common.capabilities,
   default_config = {
     cmd = { 'gopls' },
     filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },

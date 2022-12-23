@@ -1,11 +1,15 @@
-local common = require("lsp.common-config")
+local status, common = pcall(require, "lsp.common")
+if not status then
+	return
+end
+
 local opts = {
-  capabilities = common.capabilities,
-  flags = common.flags,
-  on_attach = function(client, bufnr)
-    common.disableFormat(client)
-    common.keyAttach(bufnr)
-  end,
+	flags = common.flags,
+	on_attach = function(client, bufnr)
+		-- common.disableFormat(client)
+		common.common_on_attach(client, bufnr)
+	end,
+	capabilities = common.capabilities,
   settings = {
     -- to enable rust-analyzer settings visit:
     -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
@@ -19,7 +23,7 @@ local opts = {
 }
 
 return {
-  on_setup = function(server)
+  setup = function(server)
     local ok_rt, rust_tools = pcall(require, "rust-tools")
     if not ok_rt then
       print("Failed to load rust tools, will set up `rust_analyzer` without `rust-tools`.")
