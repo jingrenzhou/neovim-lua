@@ -157,6 +157,20 @@ local spec = {
  				{ "williamboman/mason-lspconfig.nvim" },
 			},
 		}
+
+		--goclang plugin
+		use {
+			"ray-x/go.nvim",
+			requires = {
+				"ray-x/guihua.lua", -- recommanded if need floating window support
+				'neovim/nvim-lspconfig',
+				'nvim-treesitter/nvim-treesitter',
+			},
+			config = function()
+				require("plugins.go")
+			end,
+
+		}
     -- Autocomplete
     use {
       "hrsh7th/nvim-cmp",
