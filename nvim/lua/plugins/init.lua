@@ -204,7 +204,7 @@ local spec = {
     use {
       "goolord/alpha-nvim",
       requires = { "kyazdani42/nvim-web-devicons" },
-			config = function() require("plugins/alpha-nvim") end
+			-- config = function() require("plugins/alpha-nvim") end
     }
 
 		-- Easymotion-Like
