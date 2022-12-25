@@ -207,8 +207,14 @@ local spec = {
 			config = function() require("plugins/alpha-nvim") end
     }
 
+		-- easymotion
 		use {
 			"easymotion/vim-easymotion",
+		}
+
+		use {
+			"Yggdroot/LeaderF",
+			run = ":LeaderfInstallCExtension",
 		}
 
 		-- keymap manager
