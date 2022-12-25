@@ -159,6 +159,16 @@ end
 -- Add useful keymaps
 config.view.mappings.list = {
 	{ key = {"<CR>", "o" }, action = "edit", mode = "n" },
+	{ key = "a", action = "create" },
+	{ key = "d", action = "remove" },
+	{ key = "c", action = "copy" },
+	{ key = "x", action = "cut" },
+	{ key = "p", action = "paste" },
+	{ key = "r", action = "rename" },
+	{ key = "y", action = "copy_name" },
+	{ key = "Y", action = "copy_path" },
+	{ key = "gy", action = "copy_absolute_path" },
+	{ key = "R", action = "refresh" },
 	{ key = "h", action = "close_node" },
 	{ key = "v", action = "vsplit" },
 	{ key = "sv", action = "split" },

@@ -207,11 +207,18 @@ local spec = {
 			config = function() require("plugins/alpha-nvim") end
     }
 
-		-- easymotion
+		-- Easymotion-Like
 		use {
-			"easymotion/vim-easymotion",
+			"phaazon/hop.nvim",
+			--branch = 'v2', -- optional but strongly recommended
+			-- config = function()
+			-- 	-- you can configure Hop the way you like here; see :h hop-config
+			-- 	require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+			-- end
+			config = function() require("plugins.hop") end,
 		}
 
+		-- LeaderF
 		use {
 			"Yggdroot/LeaderF",
 			run = ":LeaderfInstallCExtension",

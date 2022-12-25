@@ -2,8 +2,6 @@
 lua require ("init")
 
 " import vim
-" easymotion
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
 
 " Leaderf
 " === LeaderF
