@@ -48,7 +48,7 @@ local mappings = {
 		c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
 		f = { "<cmd>Telescope find_files<cr>", "Find File" },
-		g = { "<cmd>Telescope grep_string<cr>", "Find Strings" },
+		g = { "<cmd>Telescope grep_string<cr>", "Find Cursor Strings" },
 		h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
 		H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
@@ -60,7 +60,7 @@ local mappings = {
 		},
 		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
 		R = { "<cmd>Telescope registers<cr>", "Registers" },
-		t = { "<cmd>Telescope live_grep<cr>", "Text" },
+		t = { "<cmd>Telescope live_grep<cr>", "Find Text" },
 
 	},
 }
