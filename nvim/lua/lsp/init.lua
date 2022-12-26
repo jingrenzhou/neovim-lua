@@ -9,8 +9,7 @@ end
 -- see : help mason-lspconfig-dynamic-server-setup to detail
 require("mason").setup()
 require("mason-lspconfig").setup({
-	 -- ensure_installed = {"clangd", "sumneko_lua", "gopls", "golangci_lint_ls", "pyright", "bashls", "jsonls", "rust_analyzer"},
-	 ensure_installed = {"clangd", "sumneko_lua", "gopls", "golangci_lint_ls", "pyright", "bashls", "jsonls"},
+	ensure_installed = {"clangd", "sumneko_lua", "gopls", "golangci_lint_ls", "pyright", "bashls", "jsonls", "rust_analyzer"},
 })
 require("mason-lspconfig").setup_handlers ({
 	-- The first entry (without a key) will be the default handler

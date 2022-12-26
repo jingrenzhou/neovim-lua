@@ -171,6 +171,12 @@ local spec = {
 			end,
 
 		}
+
+		-- rust-tools
+		use {
+			"simrat39/rust-tools.nvim"
+		}
+
     -- Autocomplete
     use {
       "hrsh7th/nvim-cmp",
