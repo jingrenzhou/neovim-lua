@@ -118,7 +118,7 @@ local config = {
 		},
 		pickers = get_pickers(actions),
 		file_ignore_patterns = {},
-		path_display = { "smart" },
+		--path_display = { "smart" },
 		winblend = 0,
 		border = {},
 		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
